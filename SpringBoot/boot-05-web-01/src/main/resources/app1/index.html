@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页</title>
+</head>
+<body>
+<h1>你爹欢迎你!</h1>
+<form action="/user" method="get">
+    <input value="REST-GET提交" type="submit" />
+</form>
+
+<form action="/user" method="post">
+    <input value="REST-POST提交" type="submit" />
+</form>
+
+<form action="/user" method="post">
+    <input name="_method" type="hidden" value="DELETE"/>
+    <input value="REST-DELETE 提交" type="submit"/>
+</form>
+
+<form action="/user" method="post">
+    <input name="_method" type="hidden" value="PUT" />
+    <input value="REST-PUT提交"type="submit" />
+</form>
+<h1>测试基本注解</h1>
+<ul>
+    <li>@PathVariable(路径变量)<a href="/car/2/owner/zhangsan">测试获取路径变量</a> </li>
+    <li>@RequestHeader(获取请求头)<a href="/car/header">测试获取请求头</a> </li>
+    <li>@RequestParam(获取请求参数)<a href="/car/param?age=18&inters=basketball&inters=game">测试请求参数</a> </li>
+    <li>@CookieValue(获取cookie值)<a href="/car/cookie">测试请求头中cookie的相关值</a></li>
+    <li>@RequestBody(获取请求体)测试见下列表单</li>
+    <li>@RequestAttribute(获取request域属性)<a href="/goto">测试@RequestAttribute注解</a> </li>
+    <li>@MatrixVariable(矩阵变量)</li>
+</ul>
+<h1>测试矩阵变量</h1>
+<a href="/cars/sell;low=34;brand=byd,audi,yd">@MatrixVariable(矩阵变量)</a><br>
+<a href="/cars/sell;low=34;brand=byd;brand=audi;brand=yd">@MatrixVariable(矩阵变量)</a><br>
+<a href="/boss/1;age=20/2;age=10">@MatrixVariable(矩阵变量)/boss/{bossId}/{empId}</a><br>
+<h1>测试@RequestBody</h1>
+<form action="/save" method="post">
+    用户名:<input name="username" /><br>
+    邮箱:<input name="email"/><br>
+    <input type="submit" value="测试@RequestBody接收请求体对象">
+</form>
+<h1>测试复杂参数</h1>
+<a href="/params" >测试map和model向请求域中共享数据</a>
+<h1>测试封装pojo</h1>
+<form action="/saveuser" method="post">
+    姓名:<input name="userName" value="zhangsan"><br>
+    年龄:<input name="age" value="18"><br>
+    生日:<input name="birth" value="2019/12/10"><br>
+    <!--宠物姓名:<input name="pet.name" value="阿猫"><br>-->
+    <!--宠物年龄:<input name="pet.age" value="5"><br>-->
+    <!--宠物年龄:<input name="age" value="5"><br>-->
+
+    <!--公司现在认为宠物的数据分开组织不好，不想使用级联属性命名的方式，想自己组织如下的数据形式，
+    后端如何自定义类型转换器来处理这种数据进行对象的封装呢，如果不管直接发送请求，服务器会提示数据绑定错误：错误
+    信息是person的pet属性绑定"阿猫,3"发生了类型不匹配问题，String类型转换成Pet属性转换不过来，即springMVC不知道
+    怎么将"阿猫,3"按某种规则封装成宠物对象，因为底层转换是converter负责的，我们只需要自定义一个Converter即可-->
+    宠物:<input name="pet" value="阿猫,3">
+    <input TYPE="submit" value="保存">
+</form>
+<h1>测试控制器方法返回值处理</h1>
+<a href="/test/person">测试控制器方法返回值处理</a>
+</body>
+</html>

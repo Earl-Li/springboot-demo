@@ -1,0 +1,58 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_account
+    username: root
+    password: Haworthia0715
+    driver-class-name: com.mysql.cj.jdbc.Driver #这个是数据库驱动
+    #type: com.zaxxer.hikari.HikariDataSource #这个已经被默认配置好了
+    #filters: stat,wall
+    #max-active: 12
+    druid:
+      stat-view-servlet: #这个下面都是stat-view-servlet监控页的设置
+        enabled: true #监控页的功能默认也是开启的，这些属性配置项可以在DruidStatProperties（前缀spring.datasource.druid）的内部类StatViewServlet中查看到
+        login-username: admin
+        login-password: 123456
+        reset-enable: false #重置按钮，重置按钮就是监控页顶上蓝色的重置按钮，可以重置除了SQL防火墙以外的其他页面信息，默认是false，即不能重置
+        #allow:允许哪里的用户进行访问
+        #urlPattern:请求路径
+
+      #Druid的过滤器相关功能都是false
+      web-stat-filter:  #监控web，对应监控页的URI监控和web应用页面
+        enabled: true #这些功能默认都是关闭的
+        url-pattern: /* #指定匹配的请求路径
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'   #指定要排除的请求路径，这个也有默认配置，不为空就用用户的，为空就用默认配置，默认配置就是排除静态资源和druid的请求,这是一个字符串，需要使用单引号括起来，注意双引号不会转义
+
+      #DruidDataSourceWrapper中的autoAddFilters属性，addAll（filters）方法可以添加filter组件，对应的是开启监控页和防火墙功能
+      #filters属性是开启一系列功能组件，这里讲的太烂了，这个到底是开启组件功能，还是添加组件；经过测试，只这么写是可以使用SQL监控和SQL防火墙功能，不是必须在filter中指定enabled为true
+      filters:
+        #stat,wall #stat是开启sql监控的，wall是开启防火墙的，经测试，filters和filter都不写两个功能用不了
+
+      #filter属性是详细配置每一个组件属性的
+      filter:
+        stat:
+          slow-sql-millis: 1000 #设置慢查询时间，单位是毫秒；作用是Druid会统计，所有超过1s的sql都是慢查询，StatFilter中有相关的属性列表，默认慢查询是3秒
+          log-slow-sql: true #是否用日志记录慢查询，默认是false
+          enabled: true #开启StatFilter，只配置filters也可以开启这个功能，单独配置这个也可以开启Sql监控功能，所以这个和filters都可以开启防火墙功能和sql监控功能
+
+        wall:
+          config:
+            update-allow: false #这个设置为false相当于所有的更新操作都会被防火墙拦截
+            drop-table-allow: false #这个设置为false表示不允许删表，所有的删表操作都会被拦截
+          enabled: true #开启WebStatFilter
+
+      #这个是配置spring监控的
+      aop-patterns: com.atlisheng.admin.*
+  jdbc:
+    template:
+      query-timeout: 3 #默认单位是秒，3秒内没查出来就认为查询超时
+
+mybatis:
+  #config-location: classpath:mybatis/mybatis-config.xml；config-location和configuration不可以共存，mybatis不知道以哪个为准
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration: #这个属性下可以指定mybatis全局配置文件中的相关配置
+    map-underscore-to-camel-case: true

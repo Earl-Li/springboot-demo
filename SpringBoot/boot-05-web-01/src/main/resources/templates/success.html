@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>success</title>
+</head>
+<body>
+<!--th:text=""是修改该标签的文本值，${}可以获取所有域中的属性值}-->
+<h1 th:text="${msg}">哈哈</h1>
+<h2>
+    <!--th:href表示修改a标签href属性值，注意所有的th: 冒号后面不能空一格，空了会报错-->
+    <a href="www.atguigu.com" th:href="${link}">去百度</a>
+    <!--@{/link}会把/link这个字符串直接拼接到域名+前置路径后面,而不是去域中取值-->
+    <!--在属性配置文件中设置属性server.servlet.context-path为自定义上下文路径如/world即可【以后所有的请求都以/world开始】-->
+    <a href="www.atguigu.com" th:href="@{/link}">去百度2</a>
+</h2>
+
+</body>
+</html>

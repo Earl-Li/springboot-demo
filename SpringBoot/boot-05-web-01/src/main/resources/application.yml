@@ -1,0 +1,15 @@
+spring:
+  #mvc:
+  #  static-path-pattern: /res/**
+  web:
+    resources:
+      static-locations: [classpath:/app1]
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+    contentnegotiation:
+      favor-parameter: true
+server:
+  servlet:
+    context-path: /world

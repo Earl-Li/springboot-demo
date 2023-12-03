@@ -1,0 +1,36 @@
+person:
+  #userName: "zhangsan \n 李四"
+  #单引号会将其中的特殊字符转换成普通字符，与不加单引号双引号的默认行为相同
+  #双引号不会将其中的特殊字符转换成普通字符，如"zhangsan \n 李四"整体作为字符串输出到控制台，换行符仍然生效
+  #即单引号会转义特殊字符，双引号不会转义特殊字符
+  #boss: true
+  birth: 2019/12/9
+  age: 19
+  #interests: [抽烟,喝酒,烫头]
+  interests:
+    - 抽烟
+    - 喝酒
+    - 烫头
+  animal: [阿猫,阿狗]
+  #score:
+    #English: 80
+    #Math: 90
+  score: {english: 80,math: 90}
+  salarys:
+    - 9999.98
+    - 9999.99
+  pet:
+    name: 阿狗
+    weight: 99.99
+  allPets:
+    sick:
+      - {name: 阿狗,weight: 99.99}
+      - name: 阿猫
+        weight: 88.88
+      - name: 阿虫
+        weight: 77.77
+    health:
+      - {name: 阿花,weight: 199.99}
+      - {name: 阿明,weight: 199.99}
+  boss: true
+  user-name: zhangsan
